@@ -145,16 +145,18 @@ async function getContractDAIInfo(contractDAI, addressDAI) {
 async function createRandomWallet() {
   const randomWallet = ethers.Wallet.createRandom();
   const randomWallet2 = ethers.Wallet.createRandom();
+  // 0xa9BEea0Aa236afdC827675E901653f23705feF8D
   randomWallet2.connect(provider);
   const randomWalletProvider = randomWallet.connect(provider);
   const phrase = randomWallet.mnemonic.phrase;
   const address = randomWallet.address;
+  console.log('address =>', address);
+
   const publicKey = randomWallet.publicKey;
   const txCount = await provider.getTransactionCount(address);
-
-  const tx = createTxData(address, ethers.parseEther("0.0001"));
+  const tx = createTxData(address, ethers.parseEther("0"));
   const signer = await provider.getSigner()
-  const receipt = await randomWallet2.sendTransaction(tx);
+  const receipt = await signer.sendTransaction(tx);
   await receipt.wait();
   console.log("receipt =>", receipt);
 }
