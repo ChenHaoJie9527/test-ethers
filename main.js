@@ -62,6 +62,13 @@ const linkInfuraNode = async () => {
   console.log("\n6. 查询区块信息");
   const block = await providerETH.getBlock(0);
   console.log(block);
+
+  // 7. 给定合约地址查询合约bytecode，例子用的WETH地址
+  console.log("\n7. 给定合约地址查询合约bytecode，例子用的WETH地址");
+  const code = await providerETH.getCode(
+    "0xc778417e063141139fce010982780140aa0cd5ab"
+  );
+  console.log(code);
 };
 
 main();
