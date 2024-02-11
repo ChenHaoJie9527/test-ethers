@@ -20,14 +20,23 @@ const linkInfuraNode = async () => {
     `https://mainnet.infura.io/v3/${INFURA_ID}`
   );
 
-  console.log("providerETH =>", providerETH);
+  // console.log("providerETH =>", providerETH);
 
   // 连接Goerli测试网
   const providerGoerli = new ethers.JsonRpcProvider(
     `https://goerli.infura.io/v3/${INFURA_ID}`
   );
 
-  console.log("providerGoerli =>", providerGoerli);
+  // console.log("providerGoerli =>", providerGoerli);
+
+  // 1. 查询vitalik在主网和Goerli测试网的ETH余额
+  console.log("1. 查询vitalik在主网和Goerli测试网的ETH余额");
+
+  const balanceEth = await providerETH.getBalance('vitalik.eth')
+  console.log('balanceEth =>', ethers.formatEther(balanceEth));
+
+  const balanceGoerli = await providerGoerli.getBalance(`vitalik.eth`);
+  console.log('balanceGoerli =>', ethers.formatEther(balanceGoerli));
 };
 
 main();
