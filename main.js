@@ -90,7 +90,8 @@ const linkInfuraNode = async () => {
   const addressDAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F"; // DAI Contract
   await createReadContractV2(addressDAI, abiERC20, providerETH);
 
-  await createRandomWallet()
+  await createRandomWallet();
+  await createFromMnemonicWallet()
 };
 
 /**
@@ -140,10 +141,16 @@ async function getContractDAIInfo(contractDAI, addressDAI) {
   console.log(`Vitalik持仓: ${ethers.formatEther(balanceDAI)}\n`);
 }
 
+// 创建随机钱包
 async function createRandomWallet() {
-  // 创建随机钱包
   const randomWallet = ethers.Wallet.createRandom();
-  console.log('randomWallet: ', randomWallet);
+  console.log("randomWallet: ", randomWallet);
+}
+
+// 从助记词创建钱包对象
+async function createFromMnemonicWallet() {
+  const mnemonic = ethers.Wallet.createRandom().mnemonic;
+  console.log('mnemonic =>', mnemonic);
 }
 
 main();
