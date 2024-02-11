@@ -42,6 +42,11 @@ const linkInfuraNode = async () => {
   console.log("2. 查询provider连接到了哪条链");
   const network = await providerGoerli.getNetwork();
   console.log("network =>", network.name);
+
+   // 3. 查询区块高度
+   console.log("\n3. 查询区块高度")
+   const blockNumber = await providerETH.getBlockNumber();
+   console.log(blockNumber);
 };
 
 main();
