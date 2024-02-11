@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { WTFAPI } from "./abi";
 
 const provider = new ethers.BrowserProvider(window.ethereum);
 
@@ -69,6 +70,25 @@ const linkInfuraNode = async () => {
     "0xc778417e063141139fce010982780140aa0cd5ab"
   );
   console.log(code);
+
+  console.log("\n8. 创建只读contract");
+  //创建只读Contract实例
+  await createReadContract(
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    WTFAPI,
+    providerETH
+  );
 };
+
+/**
+ * 创建只读Contract合约实例需要三个参数
+ * @param _address 合约地址
+ * @param _abi 合约abi 分别有两种，一种是abi格式，一种是Ethers 实现的人类只读格式
+ * @param provider 合约提供器
+ */
+async function createReadContract(_address, _abi, _provider) {
+  const contractWETH = new ethers.Contract(_address, _abi, _provider);
+  console.log("contractWETH =>", contractWETH);
+}
 
 main();
