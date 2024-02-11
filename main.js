@@ -52,6 +52,11 @@ const linkInfuraNode = async () => {
   console.log("\n4. 查询 vitalik 钱包历史交易次数");
   const txCount = await providerETH.getTransactionCount("vitalik.eth");
   console.log(txCount);
+
+  // 5. 查询当前建议的gas设置
+  console.log("\n5. 查询当前建议的gas设置");
+  const feeData = await providerETH.getFeeData();
+  console.log(feeData);
 };
 
 main();
