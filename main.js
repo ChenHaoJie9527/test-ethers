@@ -37,6 +37,11 @@ const linkInfuraNode = async () => {
 
   const balanceGoerli = await providerGoerli.getBalance(`vitalik.eth`);
   console.log('balanceGoerli =>', ethers.formatEther(balanceGoerli));
+
+  // 2. 查询provider连接到了哪条链
+  console.log("2. 查询provider连接到了哪条链");
+  const network = await providerGoerli.getNetwork();
+  console.log("network =>", network.name);
 };
 
 main();
