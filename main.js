@@ -14,84 +14,84 @@ const main = async () => {
 
 // 链接 Infura 节点
 const linkInfuraNode = async () => {
-  const INFURA_ID = "55c4d2d02019481f93e965bee6710e95";
+  // const INFURA_ID = "55c4d2d02019481f93e965bee6710e95";
 
   // 连接以太坊主网
-  const providerETH = new ethers.JsonRpcProvider(
-    `https://mainnet.infura.io/v3/${INFURA_ID}`
-  );
+  // const providerETH = new ethers.JsonRpcProvider(
+  //   `https://mainnet.infura.io/v3/${INFURA_ID}`
+  // );
 
   // console.log("providerETH =>", providerETH);
 
   // 连接Goerli测试网
-  const providerGoerli = new ethers.JsonRpcProvider(
-    `https://goerli.infura.io/v3/${INFURA_ID}`
-  );
+  // const providerGoerli = new ethers.JsonRpcProvider(
+  //   `https://goerli.infura.io/v3/${INFURA_ID}`
+  // );
 
   // console.log("providerGoerli =>", providerGoerli);
 
-  // 1. 查询vitalik在主网和Goerli测试网的ETH余额
-  console.log("1. 查询vitalik在主网和Goerli测试网的ETH余额");
+  // // 1. 查询vitalik在主网和Goerli测试网的ETH余额
+  // console.log("1. 查询vitalik在主网和Goerli测试网的ETH余额");
 
-  const balanceEth = await providerETH.getBalance("vitalik.eth");
-  console.log("balanceEth =>", ethers.formatEther(balanceEth));
+  // const balanceEth = await providerETH.getBalance("vitalik.eth");
+  // console.log("balanceEth =>", ethers.formatEther(balanceEth));
 
-  const balanceGoerli = await providerGoerli.getBalance(`vitalik.eth`);
-  console.log("balanceGoerli =>", ethers.formatEther(balanceGoerli));
+  // const balanceGoerli = await providerGoerli.getBalance(`vitalik.eth`);
+  // console.log("balanceGoerli =>", ethers.formatEther(balanceGoerli));
 
-  // 2. 查询provider连接到了哪条链
-  console.log("2. 查询provider连接到了哪条链");
-  const network = await providerGoerli.getNetwork();
-  console.log("network =>", network.name);
+  // // 2. 查询provider连接到了哪条链
+  // console.log("2. 查询provider连接到了哪条链");
+  // const network = await providerGoerli.getNetwork();
+  // console.log("network =>", network.name);
 
-  // 3. 查询区块高度
-  console.log("\n3. 查询区块高度");
-  const blockNumber = await providerETH.getBlockNumber();
-  console.log(blockNumber);
+  // // 3. 查询区块高度
+  // console.log("\n3. 查询区块高度");
+  // const blockNumber = await providerETH.getBlockNumber();
+  // console.log(blockNumber);
 
-  // 4. 查询 vitalik 钱包历史交易次数
-  console.log("\n4. 查询 vitalik 钱包历史交易次数");
-  const txCount = await providerETH.getTransactionCount("vitalik.eth");
-  console.log(txCount);
+  // // 4. 查询 vitalik 钱包历史交易次数
+  // console.log("\n4. 查询 vitalik 钱包历史交易次数");
+  // const txCount = await providerETH.getTransactionCount("vitalik.eth");
+  // console.log(txCount);
 
-  // 5. 查询当前建议的gas设置
-  console.log("\n5. 查询当前建议的gas设置");
-  const feeData = await providerETH.getFeeData();
-  console.log(feeData);
+  // // 5. 查询当前建议的gas设置
+  // console.log("\n5. 查询当前建议的gas设置");
+  // const feeData = await providerETH.getFeeData();
+  // console.log(feeData);
 
-  // 6. 查询区块信息
-  console.log("\n6. 查询区块信息");
-  const block = await providerETH.getBlock(0);
-  console.log(block);
+  // // 6. 查询区块信息
+  // console.log("\n6. 查询区块信息");
+  // const block = await providerETH.getBlock(0);
+  // console.log(block);
 
-  // 7. 给定合约地址查询合约bytecode，例子用的WETH地址
-  console.log("\n7. 给定合约地址查询合约bytecode，例子用的WETH地址");
-  const code = await providerETH.getCode(
-    "0xc778417e063141139fce010982780140aa0cd5ab"
-  );
-  console.log(code);
+  // // 7. 给定合约地址查询合约bytecode，例子用的WETH地址
+  // console.log("\n7. 给定合约地址查询合约bytecode，例子用的WETH地址");
+  // const code = await providerETH.getCode(
+  //   "0xc778417e063141139fce010982780140aa0cd5ab"
+  // );
+  // console.log(code);
 
-  console.log("\n8. 创建只读contract");
-  //创建只读Contract实例
-  await createReadContract(
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-    WTFAPI,
-    providerETH
-  );
+  // console.log("\n8. 创建只读contract");
+  // //创建只读Contract实例
+  // await createReadContract(
+  //   "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+  //   WTFAPI,
+  //   providerETH
+  // );
 
   // 第2种输入abi的方式：输入程序需要用到的函数，逗号分隔，ethers会自动帮你转换成相应的abi
   // 人类可读abi，以ERC20合约为例
-  const abiERC20 = [
-    "function name() view returns (string)",
-    "function symbol() view returns (string)",
-    "function totalSupply() view returns (uint256)",
-    "function balanceOf(address) view returns (uint)",
-  ];
-  const addressDAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F"; // DAI Contract
-  await createReadContractV2(addressDAI, abiERC20, providerETH);
+  // const abiERC20 = [
+  //   "function name() view returns (string)",
+  //   "function symbol() view returns (string)",
+  //   "function totalSupply() view returns (uint256)",
+  //   "function balanceOf(address) view returns (uint)",
+  // ];
+  // const addressDAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F"; // DAI Contract
+  // await createReadContractV2(addressDAI, abiERC20, providerETH);
 
   await createRandomWallet();
-  await createFromMnemonicWallet()
+  // await createFromMnemonicWallet();
 };
 
 /**
@@ -144,13 +144,32 @@ async function getContractDAIInfo(contractDAI, addressDAI) {
 // 创建随机钱包
 async function createRandomWallet() {
   const randomWallet = ethers.Wallet.createRandom();
-  console.log("randomWallet: ", randomWallet);
+  const randomWallet2 = ethers.Wallet.createRandom();
+  randomWallet2.connect(provider);
+  const randomWalletProvider = randomWallet.connect(provider);
+  const phrase = randomWallet.mnemonic.phrase;
+  const address = randomWallet.address;
+  const publicKey = randomWallet.publicKey;
+  const txCount = await provider.getTransactionCount(address);
+
+  const tx = createTxData(address, ethers.parseEther("0.0001"));
+  const signer = await provider.getSigner()
+  const receipt = await randomWallet2.sendTransaction(tx);
+  await receipt.wait();
+  console.log("receipt =>", receipt);
 }
 
 // 从助记词创建钱包对象
 async function createFromMnemonicWallet() {
   const mnemonic = ethers.Wallet.createRandom().mnemonic;
-  console.log('mnemonic =>', mnemonic);
+  console.log("mnemonic =>", mnemonic);
+}
+
+function createTxData(toAddress, ethValue) {
+  return {
+    to: toAddress,
+    value: ethValue,
+  };
 }
 
 main();
