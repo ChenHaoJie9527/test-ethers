@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { WTFAPI } from "./abi";
 
 const provider = new ethers.BrowserProvider(window.ethereum);
+const INFURA_ID = "55c4d2d02019481f93e965bee6710e95";
 
 const main = async () => {
   const balanceVal = await provider.getBalance(
@@ -14,8 +15,6 @@ const main = async () => {
 
 // 链接 Infura 节点
 const linkInfuraNode = async () => {
-  // const INFURA_ID = "55c4d2d02019481f93e965bee6710e95";
-
   // 连接以太坊主网
   // const providerETH = new ethers.JsonRpcProvider(
   //   `https://mainnet.infura.io/v3/${INFURA_ID}`
@@ -90,8 +89,10 @@ const linkInfuraNode = async () => {
   // const addressDAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F"; // DAI Contract
   // await createReadContractV2(addressDAI, abiERC20, providerETH);
 
-  await createRandomWallet();
+  // await createRandomWallet();
   // await createFromMnemonicWallet();
+
+  await createFillContract();
 };
 
 /**
@@ -150,12 +151,12 @@ async function createRandomWallet() {
   const randomWalletProvider = randomWallet.connect(provider);
   const phrase = randomWallet.mnemonic.phrase;
   const address = randomWallet.address;
-  console.log('address =>', address);
+  console.log("address =>", address);
 
   const publicKey = randomWallet.publicKey;
   const txCount = await provider.getTransactionCount(address);
   const tx = createTxData(address, ethers.parseEther("0"));
-  const signer = await provider.getSigner()
+  const signer = await provider.getSigner();
   const receipt = await signer.sendTransaction(tx);
   await receipt.wait();
   console.log("receipt =>", receipt);
@@ -172,6 +173,39 @@ function createTxData(toAddress, ethValue) {
     to: toAddress,
     value: ethValue,
   };
+}
+
+// 声明可读写contract
+async function createFillContract() {
+  // 连接Goerli测试网
+  const providerGoerli = new ethers.JsonRpcProvider(
+    `https://goerli.infura.io/v3/${INFURA_ID}`
+  );
+
+  console.log("providerGoerli =>", providerGoerli);
+
+  // 利用私钥和provider创建wallet对象
+  const privateKey =
+    "0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b";
+  const wallet = new ethers.Wallet(privateKey, providerGoerli);
+
+  // WETH的ABI
+  const abiWETH = [
+    "function balanceOf(address) public view returns(uint)",
+    "function deposit() public payable",
+    "function transfer(address, uint) public returns (bool)",
+    "function withdraw(uint) public",
+  ];
+
+  // WETH合约地址（Goerli测试网）
+  const addressWETH = "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6"; // WETH Contract
+
+  // 声明可写合约
+  const contractWETH = new ethers.Contract(addressWETH, abiWETH, wallet);
+  console.log("contractWETH =>", contractWETH);
+  const address = await wallet.getAddress();
+  const balanceEth = await providerGoerli.getBalance(address)
+  console.log('balanceEth =>', ethers.formatEther(balanceEth));
 }
 
 main();
