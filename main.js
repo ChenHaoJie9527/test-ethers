@@ -100,12 +100,42 @@ const linkInfuraNode = async () => {
 async function createReadContract(_address, _abi, _provider) {
   const contractWETH = new ethers.Contract(_address, _abi, _provider);
   console.log("contractWETH =>", contractWETH);
+  await getContractWETHInfo(contractWETH, _address);
 }
 
 async function createReadContractV2(_address, _abi, _provider) {
   // 创建稳定币DAI的合约实例
   const contractDAI = new ethers.Contract(_address, _abi, _provider);
   console.log("contractDAI  =>", contractDAI);
+  await getContractDAIInfo(contractDAI, _address);
+}
+
+async function getContractWETHInfo(contractWETH, addressWETH) {
+  // 1. 读取WETH合约的链上信息（WETH abi）
+  const nameWETH = await contractWETH.name();
+  const symbolWETH = await contractWETH.symbol();
+  const totalSupplyWETH = await contractWETH.totalSupply();
+  console.log("\n1. 读取WETH合约信息");
+  console.log(`合约地址: ${addressWETH}`);
+  console.log(`名称: ${nameWETH}`);
+  console.log(`代号: ${symbolWETH}`);
+  console.log(`总供给: ${ethers.formatEther(totalSupplyWETH)}`);
+  const balanceWETH = await contractWETH.balanceOf("vitalik.eth");
+  console.log(`Vitalik持仓: ${ethers.formatEther(balanceWETH)}\n`);
+}
+
+async function getContractDAIInfo(contractDAI, addressDAI) {
+  // 2. 读取DAI合约的链上信息（IERC20接口合约）
+  const nameDAI = await contractDAI.name();
+  const symbolDAI = await contractDAI.symbol();
+  const totalSupplDAI = await contractDAI.totalSupply();
+  console.log("\n2. 读取DAI合约信息");
+  console.log(`合约地址: ${addressDAI}`);
+  console.log(`名称: ${nameDAI}`);
+  console.log(`代号: ${symbolDAI}`);
+  console.log(`总供给: ${ethers.formatEther(totalSupplDAI)}`);
+  const balanceDAI = await contractDAI.balanceOf("vitalik.eth");
+  console.log(`Vitalik持仓: ${ethers.formatEther(balanceDAI)}\n`);
 }
 
 main();
