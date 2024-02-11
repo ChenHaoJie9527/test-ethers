@@ -57,6 +57,11 @@ const linkInfuraNode = async () => {
   console.log("\n5. 查询当前建议的gas设置");
   const feeData = await providerETH.getFeeData();
   console.log(feeData);
+
+  // 6. 查询区块信息
+  console.log("\n6. 查询区块信息");
+  const block = await providerETH.getBlock(0);
+  console.log(block);
 };
 
 main();
