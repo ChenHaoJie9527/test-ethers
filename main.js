@@ -32,21 +32,26 @@ const linkInfuraNode = async () => {
   // 1. 查询vitalik在主网和Goerli测试网的ETH余额
   console.log("1. 查询vitalik在主网和Goerli测试网的ETH余额");
 
-  const balanceEth = await providerETH.getBalance('vitalik.eth')
-  console.log('balanceEth =>', ethers.formatEther(balanceEth));
+  const balanceEth = await providerETH.getBalance("vitalik.eth");
+  console.log("balanceEth =>", ethers.formatEther(balanceEth));
 
   const balanceGoerli = await providerGoerli.getBalance(`vitalik.eth`);
-  console.log('balanceGoerli =>', ethers.formatEther(balanceGoerli));
+  console.log("balanceGoerli =>", ethers.formatEther(balanceGoerli));
 
   // 2. 查询provider连接到了哪条链
   console.log("2. 查询provider连接到了哪条链");
   const network = await providerGoerli.getNetwork();
   console.log("network =>", network.name);
 
-   // 3. 查询区块高度
-   console.log("\n3. 查询区块高度")
-   const blockNumber = await providerETH.getBlockNumber();
-   console.log(blockNumber);
+  // 3. 查询区块高度
+  console.log("\n3. 查询区块高度");
+  const blockNumber = await providerETH.getBlockNumber();
+  console.log(blockNumber);
+
+  // 4. 查询 vitalik 钱包历史交易次数
+  console.log("\n4. 查询 vitalik 钱包历史交易次数");
+  const txCount = await providerETH.getTransactionCount("vitalik.eth");
+  console.log(txCount);
 };
 
 main();
