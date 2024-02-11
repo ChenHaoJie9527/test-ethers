@@ -78,6 +78,17 @@ const linkInfuraNode = async () => {
     WTFAPI,
     providerETH
   );
+
+  // 第2种输入abi的方式：输入程序需要用到的函数，逗号分隔，ethers会自动帮你转换成相应的abi
+  // 人类可读abi，以ERC20合约为例
+  const abiERC20 = [
+    "function name() view returns (string)",
+    "function symbol() view returns (string)",
+    "function totalSupply() view returns (uint256)",
+    "function balanceOf(address) view returns (uint)",
+  ];
+  const addressDAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F"; // DAI Contract
+  await createReadContractV2(addressDAI, abiERC20, providerETH);
 };
 
 /**
@@ -89,6 +100,12 @@ const linkInfuraNode = async () => {
 async function createReadContract(_address, _abi, _provider) {
   const contractWETH = new ethers.Contract(_address, _abi, _provider);
   console.log("contractWETH =>", contractWETH);
+}
+
+async function createReadContractV2(_address, _abi, _provider) {
+  // 创建稳定币DAI的合约实例
+  const contractDAI = new ethers.Contract(_address, _abi, _provider);
+  console.log("contractDAI  =>", contractDAI);
 }
 
 main();
